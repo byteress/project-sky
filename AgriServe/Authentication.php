@@ -42,7 +42,7 @@ class Authentication
      * @param string $password User's password
      * @return void TRUE if okay, FALSE otherwise
      **/
-    public function userLogin(string $username, string $password, string $csrf)
+    public function userLogin(string $username, string $password)
     {
 
         $username = trim($username);
@@ -71,7 +71,6 @@ class Authentication
                         Session::setSession("user_id", $row['user_id']);
                         Session::setSession("isLoggedIn", true);
                         Session::setSession("login_fingerprint", Generate::_generateLoginString());
-
 
                         echo "true";
 

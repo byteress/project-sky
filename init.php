@@ -11,3 +11,7 @@ spl_autoload_register(function ($classname){
     }
 
 });
+
+Session::startSession();
+
+$user = new Authentication();

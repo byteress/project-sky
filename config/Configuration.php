@@ -6,7 +6,7 @@
 const PRODUCTION = false;
 
 const DB_HOST = PRODUCTION ? '23.111.150.178' : 'localhost';
-const DB_NAME = PRODUCTION ? 'agrisudi_production' : 'payment_gateway';
+const DB_NAME = PRODUCTION ? 'agrisudi_production' : 'agriserve';
 const DB_USER = PRODUCTION ? 'agrisudi_agriserve' : 'root';
 const DB_PASS = PRODUCTION ? 'uXD3-bXc}{m#' : '';
 
