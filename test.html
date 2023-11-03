@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Philippine Locations</title>
+</head>
+<body>
+<label for="region">Region:</label>
+<select id="region">
+    <option value="" disabled selected>Select Region</option>
+</select>
+
+<br>
+
+<label for="province">Province:</label>
+<select id="province">
+    <option value="" disabled selected>Select Province</option>
+</select>
+
+<br>
+
+<label for="city">City:</label>
+<select id="city">
+    <option value="" disabled selected>Select City</option>
+</select>
+
+<br>
+
+<label for="barangay">Barangay:</label>
+<select id="barangay">
+    <option value="" disabled selected>Select Barangay</option>
+</select>
+
+<script>
+    const regionDropdown = document.getElementById('region');
+    const provinceDropdown = document.getElementById('province');
+    const cityDropdown = document.getElementById('city');
+    const barangayDropdown = document.getElementById('barangay');
+
+    // Function to fetch and populate the dropdown with data from the API
+    async function populateDropdown(selectElement, apiUrl, placeholder) {
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+            console.log(data); // Log the response to the console
+
+            selectElement.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
+            if (Array.isArray(data)) {
+                selectElement.innerHTML += data.map(item => `<option value="${item.id}">${item.name}</option>`).join('');
+            } else if (data.data && Array.isArray(data.data)) {
+                selectElement.innerHTML += data.data.map(item => `<option value="${item.id}">${item.name}</option>`).join('');
+            } else {
+                console.error('API response format not recognized:', data);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+
+    // Populate the region dropdown
+    populateDropdown(regionDropdown, 'https://ph-locations-api.buonzz.com/v1/regions', 'Select Region');
+
+    // Add event listeners to populate other dropdowns based on the selected value
+    regionDropdown.addEventListener('change', () => {
+        const selectedRegionId = regionDropdown.value;
+        populateDropdown(provinceDropdown, `https://ph-locations-api.buonzz.com/v1/provinces?region_id=${selectedRegionId}`, 'Select Province');
+    });
+
+    provinceDropdown.addEventListener('change', () => {
+        const selectedProvinceId = provinceDropdown.value;
+        populateDropdown(cityDropdown, `https://ph-locations-api.buonzz.com/v1/cities?province_id=${selectedProvinceId}`, 'Select City');
+    });
+
+    cityDropdown.addEventListener('change', () => {
+        const selectedCityId = cityDropdown.value;
+        populateDropdown(barangayDropdown, `https://ph-locations-api.buonzz.com/v1/barangays?city_id=${selectedCityId}`, 'Select Barangay');
+    });
+
+</script>
+</body>
+</html>
