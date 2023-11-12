@@ -235,7 +235,7 @@ $page = "farmer_info";
             </div>
             <div class="modal-body">
 
-                <form>
+                <form id="add_farmer_form">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">
@@ -267,10 +267,11 @@ $page = "farmer_info";
                         <div class="col-md-4">
                            <div class="mb-3">
                                <label>Address</label>
-                               <input type="text" id="house_number" placeholder="HOUSE/LOT/BLDG. NO./PUROK" class="form-control">
+                               <select id="add_region" class="form-control"></select>
                            </div>
                             <div class="mb-3">
-                                <input type="text" id="house_number" placeholder="MUNICIPALITY/CITY" class="form-control">
+                                <select id="add_barangay" class="form-control"></select>
+
                             </div>
                         </div>
 
@@ -278,40 +279,350 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label></label>
+                                <select id="add_province" class="form-control"></select>
+
+                            </div>
+                            <div class="mb-3">
                                 <input type="text" id="house_number" placeholder="STREET/SITIO/SUBDIV" class="form-control">
                             </div>
-                            <div class="mb-3">
-                                <input type="text" id="house_number" placeholder="PROVINCE" class="form-control">
-                            </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label></label>
-                                <input type="text" id="house_number" placeholder="BARANGAY" class="form-control">
+                                <select id="add_municipality" class="form-control"> </select>
                             </div>
+                            <input type="text" id="house_number" placeholder="HOUSE/LOT/BLDG. NO./PUROK" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
                             <div class="mb-3">
-                                <input type="text" id="house_number" placeholder="REGION" class="form-control">
+                                <label for="sex">Sex</label>
+                                <select id="sex" name="sex" class="form-control">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label for="birtdate">Birthdate</label>
+                                <input type="date" id="add_birthday" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label>Birthplace</label>
+                                <select id="add_birthplace_region" class="form-control"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label></label>
+                                <select id="add_birthplace_province" class="form-control"></select>
+                            </div>
+                        </div>
+                         <div class="col-md-3">
+                            <div class="mb-3">
+                                <label></label>
+                                <select id="add_birthplace_municipality" class="form-control"></select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="mobile_number">Mobile Number</label>
+                                <input type="tel" id="mobile_number" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="date_of_birth">Date of Birth</label>
+                                <input type="date" id="date_of_birth" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="place_of_birth">Place of Birth</label>
+                                <input type="text" id="place_of_birth" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="religion">Religion</label>
+                                <input type="text" id="religion" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="civil_status">Civil Status</label>
+                                <select id="civil_status" class="form-control">
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="education_level">Highest Formal Education</label>
+                                <input type="text" id="education_level" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="mother_maiden_name">Mother's Maiden Name</label>
+                                <input type="text" id="mother_maiden_name" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="spouse_name">Spouse Name</label>
+                                <input type="text" id="spouse_name" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="is_pwd">Is Person with Disability (PWD)</label>
+                                <select id="is_pwd" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="is_4ps">Is 4Ps Beneficiary</label>
+                                <select id="is_4ps" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="is_ip">Is Indigenous Person (IP)</label>
+                                <select id="is_ip" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="government_id_type">Government ID Type</label>
+                                <input type="text" id="government_id_type" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="government_id_number">Government ID Number</label>
+                                <input type="text" id="government_id_number" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="is_associated">Is Associated with an Organization</label>
+                                <select id="is_associated" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="association_name">Association Name</label>
+                                <input type="text" id="association_name" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="is_household_head">Is Household Head</label>
+                                <select id="is_household_head" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="household_head_relationship">Household Head Relationship</label>
+                                <input type="text" id="household_head_relationship" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="living_household_members">Number of Living Household Members</label>
+                                <input type="number" id="living_household_members" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="no_of_female">Number of Female Household Members</label>
+                                <input type="number" id="no_of_female" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="no_of_male">Number of Male Household Members</label>
+                                <input type="number" id="no_of_male" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="emergency_contact_name">Emergency Contact Name</label>
+                                <input type="text" id="emergency_contact_name" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="emergency_contact_number">Emergency Contact Number</label>
+                                <input type="tel" id="emergency_contact_number" class="form-control">
                             </div>
                         </div>
 
 
-
-
-
-                    </div>
                 </form>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" id="submitForm" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </div>
 </div>
 <script src="js/app.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
 <script>
     const dataTable = new simpleDatatables.DataTable("#farmers")
+
+
+    $(document).ready(function () {
+        $("#add_farmer_form").on("click", function () {
+            var formData = $("#myForm").serialize();
+
+            $.ajax({
+                type: "POST",
+                url: "AgriServe/Ajax.php",
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        alert('Form submitted successfully!');
+                        // You can redirect or update the UI as needed
+                    } else {
+                        // Handle errors from the server
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function (error) {
+                    console.log("Error: ", error);
+                    // Handle AJAX request errors
+                    alert('An error occurred while submitting the form.');
+                }
+            });
+        });
+    });
+
+
+
+    var my_handlers = {
+        fill_provinces: function () {
+            var region_code = $(this).val();
+            $('#add_province').ph_locations('fetch_list', [{ "region_code": region_code }]);
+        },
+
+        fill_cities: function () {
+            var province_code = $(this).val();
+            $('#add_municipality').ph_locations('fetch_list', [{ "province_code": province_code }]);
+        },
+
+        fill_barangays: function () {
+            var city_code = $(this).val();
+            $('#add_barangay').ph_locations('fetch_list', [{ "city_code": city_code }]);
+        },
+
+        fill_birthplace_provinces: function () {
+            var region_code = $(this).val();
+            $('#add_birthplace_province').ph_locations('fetch_list', [{ "region_code": region_code }]);
+        },
+
+        fill_birthplace_cities: function () {
+            var province_code = $(this).val();
+            $('#add_birthplace_municipality').ph_locations('fetch_list', [{ "province_code": province_code }]);
+        },
+    };
+
+    $(function () {
+        $('#add_region').on('change', my_handlers.fill_provinces);
+        $('#add_province').on('change', my_handlers.fill_cities);
+        $('#add_municipality').on('change', my_handlers.fill_barangays);
+
+        $('#add_birthplace_region').on('change', my_handlers.fill_birthplace_provinces);
+        $('#add_birthplace_province').on('change', my_handlers.fill_birthplace_cities);
+        $('#add_birthplace_municipality').on('change', my_handlers.fill_barangays);
+
+        $('#add_region').ph_locations({ 'location_type': 'regions' });
+        $('#add_province').ph_locations({ 'location_type': 'provinces' });
+        $('#add_municipality').ph_locations({ 'location_type': 'cities' });
+        $('#add_barangay').ph_locations({ 'location_type': 'barangays' });
+
+        $("#add_birthplace_region").ph_locations({ 'location_type': 'regions' })
+        $('#add_birthplace_province').ph_locations({ 'location_type': 'provinces' });
+        $('#add_birthplace_municipality').ph_locations({ 'location_type': 'cities' });
+
+        $("#add_birthplace_region").ph_locations('fetch_list');
+        $('#add_region').ph_locations('fetch_list');
+    });
+
+
 </script>
 </body>
 </html>
