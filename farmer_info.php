@@ -21,8 +21,9 @@ $page = "farmer_info";
     <link href="css/light.css" rel="stylesheet">
     <!--     <link href="css/dark.css" rel="stylesheet">-->
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
 
 </head>
 <body>
@@ -167,10 +168,42 @@ $page = "farmer_info";
                             <div class="card">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <div class="btn-group btn-group-sm">
-                                            <button type="button" class="btn btn-primary"><i class="fal fa-print"></i> Print</button>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addFarmerModal"><i class="fal fa-user-plus"></i> Add Farmer</button>
+                                        <div class="container p-2">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                        <select name="barangays" id="sudipen_barangay" class="form-control">
+                                                            <option disabled selected>Select Barangay</option>
+                                                            <option value="All" >All Barangay</option>
+                                                            <option value="Bigbiga">Bigbiga</option>
+                                                            <option value="Bulalaan">Bulalaan</option>
+                                                            <option value="Castro">Castro</option>
+                                                            <option value="Duplas">Duplas</option>
+                                                            <option value="Ilocano">Ilocano</option>
+                                                            <option value="Ipet">Ipet</option>
+                                                            <option value="Maliclico">Maliclico</option>
+                                                            <option value="Namaltugan">Namaltugan</option>
+                                                            <option value="Old Central">Old Central</option>
+                                                            <option value="Poblacion">Poblacion</option>
+                                                            <option value="Porporiket">Porporiket</option>
+                                                            <option value="San Francisco Norte">San Francisco Norte</option>
+                                                            <option value="San Francisco Sur">San Francisco Sur</option>
+                                                            <option value="San Jose">San Jose</option>
+                                                            <option value="Sengngat">Sengngat</option>
+                                                            <option value="Turod">Turod</option>
+                                                            <option value="Up-uplas">Up-uplas</option>
+
+                                                        </select>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="btn-group btn-group-sm ">
+                                                    <button type="button" class="btn btn-primary"><i class="fal fa-print"></i> Print</button>
+                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addFarmerModal"><i class="fal fa-user-plus"></i> Add Farmer</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <table class="table table-hover" id="farmers">
                                             <thead>
                                             <tr>
@@ -184,22 +217,8 @@ $page = "farmer_info";
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td scope="row">Goggy Villanueva</td>
-                                                    <td>Winterfell</td>
-                                                    <td>093432434</td>
-                                                    <td>Sudipen</td>
-                                                    <td>Sudipen</td>
-                                                    <td>Sudipen</td>
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            <button type="button" class="btn btn-outline-primary"><i class="fal fa-print"></i></button>
-                                                            <button type="button" class="btn btn-outline-info"><i class="fal fa-eye"></i></button>
-                                                            <button type="button" class="btn btn-outline-secondary"><i class="fal fa-pencil"></i></button>
-                                                            <button type="button" class="btn btn-outline-danger"><i class="fal fa-trash"></i></button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -227,7 +246,7 @@ $page = "farmer_info";
 
 
 <div class="modal fade" id="addFarmerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add Farmer</h1>
@@ -240,25 +259,25 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="first_name">First Name</label>
-                                <input type="text" id="first_name" class="form-control">
+                                <input type="text" name="first_name" id="first_name" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label for="middle_name">Middle Name</label>
-                                <input type="text" id="middle_name" class="form-control">
+                                <input type="text" name="middle_name" id="middle_name" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label for="last_name">Last Name</label>
-                                <input type="text" id="last_name" class="form-control">
+                                <input type="text" name="last_name" id="last_name" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="mb-3">
                                 <label for="extension_name">Ext. Name</label>
-                                <input type="text" id="extension_name" class="form-control">
+                                <input type="text" name="extension_name" id="extension_name" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -267,10 +286,10 @@ $page = "farmer_info";
                         <div class="col-md-4">
                            <div class="mb-3">
                                <label>Address</label>
-                               <select id="add_region" class="form-control"></select>
+                               <select id="add_region" name="dadd_region" class="form-control"></select>
                            </div>
                             <div class="mb-3">
-                                <select id="add_barangay" class="form-control"></select>
+                                <select id="add_barangay" name="dadd_barangay" class="form-control"></select>
 
                             </div>
                         </div>
@@ -279,20 +298,20 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label></label>
-                                <select id="add_province" class="form-control"></select>
+                                <select id="add_province" name="dadd_province" class="form-control"></select>
 
                             </div>
                             <div class="mb-3">
-                                <input type="text" id="house_number" placeholder="STREET/SITIO/SUBDIV" class="form-control">
+                                <input type="text" name="street" id="street" placeholder="STREET/SITIO/SUBDIV" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label></label>
-                                <select id="add_municipality" class="form-control"> </select>
+                                <select id="add_municipality" name="dadd_municipality" class="form-control"> </select>
                             </div>
-                            <input type="text" id="house_number" placeholder="HOUSE/LOT/BLDG. NO./PUROK" class="form-control">
+                            <input type="text" id="house_number" name="house_number" placeholder="HOUSE/LOT/BLDG. NO./PUROK" class="form-control">
                         </div>
                     </div>
 
@@ -310,27 +329,27 @@ $page = "farmer_info";
                         <div class="col-md-2">
                             <div class="mb-3">
                                 <label for="birtdate">Birthdate</label>
-                                <input type="date" id="add_birthday" class="form-control">
+                                <input type="date" name="add_birthday" id="add_birthday" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-2">
                             <div class="mb-3">
                                 <label>Birthplace</label>
-                                <select id="add_birthplace_region" class="form-control"></select>
+                                <select id="add_birthplace_region" name="dadd_birthplace_region" class="form-control"></select>
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label></label>
-                                <select id="add_birthplace_province" class="form-control"></select>
+                                <select id="add_birthplace_province" name="dadd_birthplace_province" class="form-control"></select>
                             </div>
                         </div>
                          <div class="col-md-3">
                             <div class="mb-3">
                                 <label></label>
-                                <select id="add_birthplace_municipality" class="form-control"></select>
+                                <select id="add_birthplace_municipality" name="dadd_birthplace_municipality" class="form-control"></select>
                             </div>
                         </div>
 
@@ -340,37 +359,25 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="mobile_number">Mobile Number</label>
-                                <input type="tel" id="mobile_number" class="form-control">
+                                <input type="tel" id="mobile_number" name="mobile_number" class="form-control">
                             </div>
                         </div>
 
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="date_of_birth">Date of Birth</label>
-                                <input type="date" id="date_of_birth" class="form-control">
-                            </div>
-                        </div>
 
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="place_of_birth">Place of Birth</label>
-                                <input type="text" id="place_of_birth" class="form-control">
-                            </div>
-                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="religion">Religion</label>
-                                <input type="text" id="religion" class="form-control">
+                                <input type="text" id="religion" name="religion" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="civil_status">Civil Status</label>
-                                <select id="civil_status" class="form-control">
+                                <select id="civil_status" name="civil_status" class="form-control">
                                     <option value="Single">Single</option>
                                     <option value="Married">Married</option>
                                     <option value="Divorced">Divorced</option>
@@ -382,7 +389,15 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="education_level">Highest Formal Education</label>
-                                <input type="text" id="education_level" class="form-control">
+                                <select name="education_level" id="education_level" class="form-control">
+                                    <option value="elementary">Elementary</option>
+                                    <option value="high_school">High School</option>
+                                    <option value="college">College</option>
+                                    <option value="bachelors_degree">Bachelor's Degree</option>
+                                    <option value="masters_degree">Master's Degree</option>
+                                    <option value="doctorate">Doctorate</option>
+                                    <option value="other">Other</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -392,21 +407,21 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="mother_maiden_name">Mother's Maiden Name</label>
-                                <input type="text" id="mother_maiden_name" class="form-control">
+                                <input type="text" id="mother_maiden_name" name="mother_maiden_name" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="spouse_name">Spouse Name</label>
-                                <input type="text" id="spouse_name" class="form-control">
+                                <input type="text" id="spouse_name" name="spouse_name" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="is_pwd">Is Person with Disability (PWD)</label>
-                                <select id="is_pwd" class="form-control">
+                                <select id="is_pwd" name="is_pwd" class="form-control">
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -418,7 +433,7 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="is_4ps">Is 4Ps Beneficiary</label>
-                                <select id="is_4ps" class="form-control">
+                                <select id="is_4ps" name="is_4ps" class="form-control">
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -428,7 +443,7 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="is_ip">Is Indigenous Person (IP)</label>
-                                <select id="is_ip" class="form-control">
+                                <select id="is_ip" name="is_ip" class="form-control">
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -438,7 +453,35 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="government_id_type">Government ID Type</label>
-                                <input type="text" id="government_id_type" class="form-control">
+                                <select name="government_id_type" id="government_id_type" class="form-control">
+                                    <option value="" selected disabled>Select an option</option>
+                                    <option value="umid">Unified Multi-Purpose ID (UMID)</option>
+                                    <option value="employeeId">Employee’s ID / Office ID</option>
+                                    <option value="driverLicense">Driver’s License</option>
+                                    <option value="prc">Professional Regulation Commission (PRC) ID</option>
+                                    <option value="passport">Passport</option>
+                                    <option value="seniorCitizenId">Senior Citizen ID</option>
+                                    <option value="sss">Social Security System (SSS) ID</option>
+                                    <option value="comelec">COMELEC / Voter’s ID / COMELEC Registration Form</option>
+                                    <option value="philId">Philippine Identification (PhilID / ePhilID)</option>
+                                    <option value="nbiClearance">NBI Clearance</option>
+                                    <option value="ibpId">Integrated Bar of the Philippines (IBP) ID</option>
+                                    <option value="firearmsLicense">Firearms License</option>
+                                    <option value="afpslaiId">AFPSLAI ID</option>
+                                    <option value="pvaoId">PVAO ID</option>
+                                    <option value="afpBeneficiaryId">AFP Beneficiary ID</option>
+                                    <option value="bir">BIR (TIN)</option>
+                                    <option value="pagibig">Pag-ibig ID</option>
+                                    <option value="pwdId">Person’s With Disability (PWD) ID</option>
+                                    <option value="soloParentId">Solo Parent ID</option>
+                                    <option value="4psId">Pantawid Pamilya Pilipino Program (4Ps) ID</option>
+                                    <option value="barangayId">Barangay ID</option>
+                                    <option value="postalId">Philippine Postal ID</option>
+                                    <option value="philhealth">PhilHealth ID</option>
+                                    <option value="schoolId">School ID</option>
+                                    <option value="otherIds">Other valid government-issued IDs or Documents with picture and signature</option>
+                                    <!-- Add more options as needed -->
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -447,14 +490,14 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="government_id_number">Government ID Number</label>
-                                <input type="text" id="government_id_number" class="form-control">
+                                <input type="text" name="government_id_number" id="government_id_number" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="is_associated">Is Associated with an Organization</label>
-                                <select id="is_associated" class="form-control">
+                                <select id="is_associated" name="is_associated" class="form-control">
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -464,7 +507,7 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="association_name">Association Name</label>
-                                <input type="text" id="association_name" class="form-control">
+                                <input type="text" name="association_name" id="association_name" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -473,7 +516,7 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="is_household_head">Is Household Head</label>
-                                <select id="is_household_head" class="form-control">
+                                <select id="is_household_head" name="is_household_head" class="form-control">
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
                                 </select>
@@ -483,14 +526,14 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="household_head_relationship">Household Head Relationship</label>
-                                <input type="text" id="household_head_relationship" class="form-control">
+                                <input type="text" name="household_head_relationship" id="household_head_relationship" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="living_household_members">Number of Living Household Members</label>
-                                <input type="number" id="living_household_members" class="form-control">
+                                <input type="number" name="living_household_members" id="living_household_members" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -499,21 +542,21 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="no_of_female">Number of Female Household Members</label>
-                                <input type="number" id="no_of_female" class="form-control">
+                                <input type="number" name="no_of_female" id="no_of_female" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="no_of_male">Number of Male Household Members</label>
-                                <input type="number" id="no_of_male" class="form-control">
+                                <input type="number" name="no_of_male" id="no_of_male" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="emergency_contact_name">Emergency Contact Name</label>
-                                <input type="text" id="emergency_contact_name" class="form-control">
+                                <input type="text" name="emergency_contact_name" id="emergency_contact_name" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -522,54 +565,104 @@ $page = "farmer_info";
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="emergency_contact_number">Emergency Contact Number</label>
-                                <input type="tel" id="emergency_contact_number" class="form-control">
+                                <input type="tel" name="emergency_contact_number" id="emergency_contact_number" class="form-control">
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <input type="hidden" name="action" value="editFarmer">
+                                    <button type="submit" name="submitForm" id="submitForm" class="btn btn-primary">Submit</button>
+
+                                </div>
+                            </div>
 
                 </form>
 
             </div>
-            <div class="modal-footer">
-                <button type="button" id="submitForm" class="btn btn-primary">Submit</button>
-            </div>
+
         </div>
     </div>
 </div>
 <script src="js/app.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="js/init.js"></script>
 <script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
 <script>
-    const dataTable = new simpleDatatables.DataTable("#farmers")
-
 
     $(document).ready(function () {
-        $("#add_farmer_form").on("click", function () {
-            var formData = $("#myForm").serialize();
 
+
+        var farmersTable = $('#farmers').DataTable({
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'datatables/farmers_dt.php',
+                'data': function(d) {
+                    d.barangay = $('#sudipen_barangay').val();
+                }
+            },
+            'columns': [
+                { data: 'firstname' },
+                { data: 'middlename' },
+                { data: 'surname' },
+                { data: 'birth_date' },
+                { data: 'mobile_number', orderable: false },
+                { data: 'address' },
+                { data: 'actions', orderable: false }
+            ],
+            'suppressWarnings': true
+        });
+
+        $('#sudipen_barangay').on('change', function() {
+            farmersTable.ajax.reload();
+        });
+
+        $("#add_farmer_form").on("submit", function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            function handleDropdownChange(dropdown, key) {
+                formData.append(key, dropdown.find('option:selected').text());
+            }
+
+            handleDropdownChange($('#add_province'), 'add_province');
+            handleDropdownChange($('#add_municipality'), 'add_municipality');
+            handleDropdownChange($('#add_barangay'), 'add_barangay');
+
+            handleDropdownChange($('#add_birthplace_region'), 'add_birthplace_region');
+            handleDropdownChange($('#add_birthplace_province'), 'add_birthplace_province');
+            handleDropdownChange($('#add_birthplace_municipality'), 'add_birthplace_municipality');
+
+
+            console.log(formData);
+
+            // Submit the form data via AJAX
             $.ajax({
                 type: "POST",
                 url: "AgriServe/Ajax.php",
                 data: formData,
                 dataType: 'json',
+                contentType: false, // Ensure this is set to false for FormData
+                processData: false, // Ensure this is set to false for FormData
                 success: function (response) {
                     console.log(response);
                     if (response.success) {
-                        alert('Form submitted successfully!');
-                        // You can redirect or update the UI as needed
+                        notyf.success(response.message)
+                        farmersTable.ajax.reload();
                     } else {
                         // Handle errors from the server
                         alert('Error: ' + response.message);
                     }
-                },
-                error: function (error) {
-                    console.log("Error: ", error);
-                    // Handle AJAX request errors
-                    alert('An error occurred while submitting the form.');
                 }
             });
         });
     });
+
 
 
 

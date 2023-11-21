@@ -14,4 +14,9 @@ error_reporting(PRODUCTION ? 0 : E_ALL);
 ini_set('display_errors', PRODUCTION ? 'Off' : 'On');
 
 
+ini_set('display_errors', 'Off');
+
+
+
+
 
