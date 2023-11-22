@@ -32,7 +32,7 @@ class Farmers
         return $this->executeStatement($query, $data);
     }
 
-    public function editFarmer($farmerId, $data)
+    public function editFarmer($farmer_id, $data)
     {
         $query = "UPDATE farmer_info SET
                   firstname = :firstname,
@@ -67,9 +67,41 @@ class Farmers
                   emergency_contact_number = :emergency_contact_number
                   WHERE farmer_id = :farmerId";
 
-        $data[':farmerId'] = $farmerId;
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':farmerId', $farmer_id);
+        $stmt->bindParam(':firstname', $data['firstname']);
+        $stmt->bindParam(':middlename', $data['middlename']);
+        $stmt->bindParam(':surname', $data['surname']);
+        $stmt->bindParam(':extension_name', $data['extension_name']);
+        $stmt->bindParam(':address', $data['address']);
+        $stmt->bindParam(':sex', $data['sex']);
+        $stmt->bindParam(':mobile_number', $data['mobile_number']);
+        $stmt->bindParam(':date_of_birth', $data['date_of_birth']);
+        $stmt->bindParam(':place_of_birth', $data['place_of_birth']);
+        $stmt->bindParam(':religion', $data['religion']);
+        $stmt->bindParam(':civil_status', $data['civil_status']);
+        $stmt->bindParam(':highest_formal_education', $data['highest_formal_education']);
+        $stmt->bindParam(':mother_maiden_name', $data['mother_maiden_name']);
+        $stmt->bindParam(':spouse_name', $data['spouse_name']);
+        $stmt->bindParam(':is_pwd', $data['is_pwd']);
+        $stmt->bindParam(':is_4ps', $data['is_4ps']);
+        $stmt->bindParam(':is_ip', $data['is_ip']);
+        $stmt->bindParam(':has_government_id', $data['has_government_id']);
+        $stmt->bindParam(':government_id_type', $data['government_id_type']);
+        $stmt->bindParam(':government_id_number', $data['government_id_number']);
+        $stmt->bindParam(':is_associated', $data['is_associated']);
+        $stmt->bindParam(':association_name', $data['association_name']);
+        $stmt->bindParam(':is_household_head', $data['is_household_head']);
+        $stmt->bindParam(':household_head_name', $data['household_head_name']);
+        $stmt->bindParam(':household_head_relationship', $data['household_head_relationship']);
+        $stmt->bindParam(':living_household_members', $data['living_household_members']);
+        $stmt->bindParam(':no_of_female', $data['no_of_female']);
+        $stmt->bindParam(':no_of_male', $data['no_of_male']);
+        $stmt->bindParam(':emergency_contact_name', $data['emergency_contact_name']);
+        $stmt->bindParam(':emergency_contact_number', $data['emergency_contact_number']);
 
-        return $this->executeStatement($query, $data);
+        // Execute the update query
+        $stmt->execute();
     }
 
     public function farmerDatatables() {
@@ -102,13 +134,13 @@ class Farmers
         }
 
         // Total number of records without filtering
-        $stmt = $this->db->prepare("SELECT COUNT(*) AS allcount FROM farmer_info WHERE 1 " . $filterBarangay);
+        $stmt = $this->db->prepare("SELECT COUNT(*) AS allcount FROM farmer_info WHERE 1 ");
         $stmt->execute();
         $records = $stmt->fetch();
         $totalRecords = $records['allcount'];
 
         // Total number of records with filtering
-        $stmt = $this->db->prepare("SELECT COUNT(*) AS allcount FROM farmer_info WHERE 1 " . $filterBarangay . " " . $searchQuery);
+        $stmt = $this->db->prepare("SELECT COUNT(*) AS allcount FROM farmer_info WHERE 1  " . $searchQuery);
         $stmt->execute($searchArray);
         $records = $stmt->fetch();
         $totalRecordwithFilter = $records['allcount'];
@@ -176,5 +208,15 @@ class Farmers
     {
         $stmt = $this->db->prepare($query);
         return $stmt->execute($params);
+    }
+
+    public function deleteFarmer($id)
+    {
+        $sql = "DELETE FROM farmer_info WHERE farmer_id = :fid";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":fid", $id);
+        if ($stmt->execute()){
+            return true;
+        }
     }
 }
