@@ -1,4 +1,68 @@
 
+$(document).on('click', '.view_farmer', function (){
+    let farmer_id = $(this).data('farmer-id');
+    var viewProfileModal = new bootstrap.Modal(document.getElementById('viewFarmerProfileModal'))
+
+    $.ajax({
+        type: "POST",
+        url: "AgriServe/Ajax.php",
+        data: {action: "fetchFarmerById", id: farmer_id },
+        success: function (data) {
+            var farmerData = JSON.parse(data)
+            $("#view_first_name").val(farmerData.firstname);
+            $("#view_farmer_id").val(farmerData.farmer_id);
+            $("#view_middle_name").val(farmerData.middlename);
+            $("#view_last_name").val(farmerData.surname);
+            $("#view_extension_name").val(farmerData.extension_name);
+
+            $("#view_address").val(farmerData.address);
+
+            $("#view_sex").val(farmerData.sex);
+            $("#view_add_birthday").val(farmerData.date_of_birth);
+            $("#view_birthplace").val(farmerData.place_of_birth);
+
+            $("#view_mobile_number").val(farmerData.mobile_number);
+
+            $("#view_religion").val(farmerData.religion);
+            $("#view_civil_status").val(farmerData.civil_status);
+            $("#view_education_level").val(farmerData.highest_formal_education);
+            $("#view_mother_maiden_name").val(farmerData.mother_maiden_name);
+            $("#view_spouse_name").val(farmerData.spouse_name);
+
+// Set values for status information
+            $("#view_is_pwd").val(farmerData.is_pwd);
+            $("#view_is_4ps").val(farmerData.is_4ps);
+            $("#view_is_ip").val(farmerData.is_ip);
+
+// Set values for government ID information
+            $("#view_government_id_type").val(farmerData.government_id_type);
+            $("#view_government_id_number").val(farmerData.government_id_number);
+
+// Set values for association information
+            $("#is_associated").val(farmerData.is_associated);
+            $("#view_association_name").val(farmerData.association_name);
+
+// Set values for household information
+            $("#is_household_head").val(farmerData.is_household_head);
+            $("#view_household_head_relationship").val(farmerData.household_head_relationship);
+            $("#view_living_household_members").val(farmerData.living_household_members);
+            $("#view_no_of_female").val(farmerData.no_of_female);
+            $("#view_no_of_male").val(farmerData.no_of_male);
+
+// Set values for emergency contact information
+            $("#view_emergency_contact_name").val(farmerData.emergency_contact_name);
+            $("#view_emergency_contact_number").val(farmerData.emergency_contact_number);
+
+
+        }
+    })
+
+
+    viewProfileModal.show();
+
+
+
+});
 $(document).on('click', '.delete_farmer', function (){
 
     let farmer_id = $(this).data('farmer-id')
@@ -109,7 +173,9 @@ $(document).ready(function () {
                 console.log(response);
                 if (response.success) {
                     notyf.success(response.message)
-                    farmersTable.ajax.reload();
+                    setTimeout(function () {
+                        window.location.href = 'farmer_info.php'
+                    }, 5000)
                 } else {
                     alert('Error: ' + response.message);
                 }

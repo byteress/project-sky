@@ -1,10 +1,120 @@
 <?php
 
 include_once 'init.php';
+
 //
 //    if (!$user->isLoggedIn()) {
 //        header("Location: login.php");
 //    }
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (isset($_POST['delete_land'])) {
+        $db = Database::getInstance();
+        $land_id = $_POST['land_id'];
+
+        // Prepare SQL statement
+        $sql = "DELETE FROM farmer_land_info WHERE farmer_land_id = :land_id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':land_id', $land_id);
+        if ($stmt->execute()) {
+            header("Location: land_info.php?success=1");
+            exit();
+        } else {
+            header("Location: land_info.php?success=0");
+            exit();
+        }
+    }
+
+    if (isset($_POST['save_land'])) {
+
+        // Get form data
+        $farmer_id = $_POST['farm_owner'];
+        $land_area = $_POST['land_area'];
+        $location = $_POST['land_location'];
+        $agrarian_reform_beneficiary = isset($_POST['agrarian_reform_beneficiary']) ? 1 : 0;
+        $ownership_type = $_POST['ownership_type'];
+        $within_ancestral_domain = isset($_POST['within_ancestral_domain']) ? 1 : 0;
+        $ownership_document_number = $_POST['ownership_document_number'];
+
+        // Prepare SQL statement
+        $sql = "INSERT INTO farmer_land_info (farmer_id, land_area, location, agrarian_reform_beneficiary, ownership_type, within_ancestral_domain, ownership_document_number)
+                VALUES (:farmer_id, :land_area, :location, :agrarian_reform_beneficiary, :ownership_type, :within_ancestral_domain, :ownership_document_number)";
+
+        // Prepare and execute the statement
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':farmer_id', $farmer_id);
+        $stmt->bindParam(':land_area', $land_area);
+        $stmt->bindParam(':location', $location);
+        $stmt->bindParam(':agrarian_reform_beneficiary', $agrarian_reform_beneficiary);
+        $stmt->bindParam(':ownership_type', $ownership_type);
+        $stmt->bindParam(':within_ancestral_domain', $within_ancestral_domain);
+        $stmt->bindParam(':ownership_document_number', $ownership_document_number);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            header("Location: land_info?success=1");
+        } else {
+            header("Location: land_info?success=0");
+        }
+    }
+
+    if (isset($_POST['edit_land'])) {
+        $db = Database::getInstance();
+
+        $land_id = $_POST['land_id'];
+        $farmer_id = $_POST['farm_owner'];
+        $land_area = $_POST['land_area'];
+        $location = $_POST['land_location'];
+        $agrarian_reform_beneficiary = isset($_POST['agrarian_reform_beneficiary']) ? 1 : 0;
+        $ownership_type = $_POST['ownership_type'];
+        $within_ancestral_domain = isset($_POST['within_ancestral_domain']) ? 1 : 0;
+        $ownership_document_number = $_POST['ownership_document_number'];
+
+        $sql = "UPDATE farmer_land_info SET farmer_id = :farmer_id, land_area = :land_area, location = :location,
+                agrarian_reform_beneficiary = :agrarian_reform_beneficiary, ownership_type = :ownership_type,
+                within_ancestral_domain = :within_ancestral_domain, ownership_document_number = :ownership_document_number
+                WHERE farmer_land_id = :land_id";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':land_id', $land_id);
+        $stmt->bindParam(':farmer_id', $farmer_id);
+        $stmt->bindParam(':land_area', $land_area);
+        $stmt->bindParam(':location', $location);
+        $stmt->bindParam(':agrarian_reform_beneficiary', $agrarian_reform_beneficiary, PDO::PARAM_INT);
+        $stmt->bindParam(':ownership_type', $ownership_type);
+        $stmt->bindParam(':within_ancestral_domain', $within_ancestral_domain, PDO::PARAM_INT);
+        $stmt->bindParam(':ownership_document_number', $ownership_document_number);
+
+        if ($stmt->execute()) {
+            header("Location: land_info.php?success=1");
+            exit();
+        } else {
+            header("Location: land_info.php?success=0");
+            exit();
+        }
+    }
+} else {
+    if (isset($_GET['id'])) {
+        $land_id = $_GET['id'];
+        $db = Database::getInstance();
+
+        $sql = "SELECT * FROM farmer_land_info WHERE farmer_land_id = :land_id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':land_id', $land_id);
+        $stmt->execute();
+        $land_data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $farmer_id = $land_data['farmer_id'];
+        $land_area = $land_data['land_area'];
+        $location = $land_data['location'];
+        $agrarian_reform_beneficiary = $land_data['agrarian_reform_beneficiary'];
+        $ownership_type = $land_data['ownership_type'];
+        $within_ancestral_domain = $land_data['within_ancestral_domain'];
+        $ownership_document_number = $land_data['ownership_document_number'];
+    }
+}
 
 $page = "land_info";
 ?>
@@ -23,6 +133,9 @@ $page = "land_info";
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/@jarstone/dselect/dist/css/dselect.css">
+    <script src="https://unpkg.com/@jarstone/dselect/dist/js/dselect.js"></script>
 
 
 </head>
@@ -167,6 +280,22 @@ $page = "land_info";
 
                             <div class="card">
                                 <div class="card-body">
+
+                                    <?php
+                                    $success = isset($_GET['success']) ? $_GET['success'] : null;
+
+                                    if ($success === '1') {
+                                        echo '<div class="alert alert-success" role="alert">Record inserted successfully.</div>';
+                                    } elseif ($success === '0') {
+                                        echo '<div class="alert alert-danger" role="alert">Error inserting record.</div>';
+                                    }
+                                    ?>
+
+                                    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#addLandInfo">
+                                        Add Land
+                                    </button>
+
+
                                     <div class="table-responsive">
 
                                         <table class="table table-hover" id="farm_land_info">
@@ -180,6 +309,31 @@ $page = "land_info";
                                             </tr>
                                             </thead>
                                             <tbody>
+
+                                            <?php
+
+                                                $sql = "SELECT * FROM farmer_land_info INNER JOIN farmer_info ON farmer_info.farmer_id = farmer_land_info.farmer_id";
+                                                $stmt = $db->query($sql);
+                                                if ($stmt->execute()):
+                                                    while ($f = $stmt->fetch(PDO::FETCH_ASSOC)):
+                                            ?>
+
+                                                    <tr>
+                                                        <td><?= $f['firstname'] ?> <?= $f['middlename'] ?> <?= $f['surname'] ?> <?= $f['extension_name'] ?> </td>
+                                                        <td><?= $f['land_area'] ?> </td>
+                                                        <td><?= $f['location'] ?> </td>
+                                                        <td><?= $f['ownership_type'] ?> </td>
+                                                        <td>  <div class="btn-group">
+                                                                <button type="button" class="btn btn-outline-info view_farmer" data-farmer-id="<?= $f['farmer_land_id'] ?>"><i class="fal fa-eye"></i></button>
+                                                                <button type="button" class="btn btn-outline-secondary edit_farmer" data-farmer-id="<?= $f['farmer_land_id'] ?>"><i class="fal fa-pencil"></i></button>
+                                                                <button type="button" class="btn btn-outline-danger delete_farmer" data-farmer-id="<?= $f['farmer_land_id'] ?>"><i class="fal fa-trash"></i></button>
+                                                            </div></td>
+                                                    </tr>
+
+                                            <?php
+                                            endwhile;
+                                            endif;
+                                            ?>
 
 
                                             </tbody>
@@ -207,6 +361,91 @@ $page = "land_info";
     </div>
 </div>
 
+<div class="modal fade" id="addLandInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="land_info.php">
+                    <div class="mb-3">
+                        <label>Farm Owner</label>
+                        <select class="form-control" name="farm_owner" id="farm_owner">
+                            <option selected disabled>Select Farmer</option>
+                            <?php
+                                $farmer_obj = new Farmers();
+                                $farmers = $farmer_obj->fetchAllFarmers();
+
+                                foreach ($farmers as $f):
+                            ?>
+                            <option value="<?= $f['farmer_id'] ?>"><?= $f['firstname'] ?> <?= $f['middlename'] ?> <?= $f['surname'] ?> <?= $f['extension_name'] ?> </option>
+                            <?php
+                            endforeach;
+                            ?>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Ownership Type</label>
+                            <select class="form-control" name="ownership_type">
+                                <option value="certificateOfLandTransfer">Certificate of Land Transfer</option>
+                                <option value="emancipationPatent">Emancipation Patent</option>
+                                <option value="individualCertificateOfLand">Individual Certificate of Land</option>
+                                <option value="collectiveCLOA">Collective CLOA</option>
+                                <option value="coownershipCLOA">Co-ownership CLOA</option>
+                                <option value="agriculturalSalesPatent">Agricultural Sales Patent</option>
+                                <option value="homesteadPatent">Homestead Patent</option>
+                                <option value="freePatent">Free Patent</option>
+                                <option value="certificateOfTitle">Certificate of Title or Regular Title</option>
+                                <option value="certificateOfAncestralDomainTitle">Certificate of Ancestral Domain Title</option>
+                                <option value="certificateOfAncestralLandTitle">Certificate of Ancestral Land Title</option>
+                                <option value="taxDeclaration">Tax Declaration</option>
+                                <option value="others">Others (e.g., Barangay Certification)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Land Area</label>
+                            <input type="text" class="form-control" placeholder="Land Area" name="land_area">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Land Location</label>
+                            <input type="text" class="form-control" placeholder="Land Location" name="land_location">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Ownership Document Number</label>
+                            <input type="text" class="form-control" name="ownership_document_number" id="ownership_document_number">
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="form-check-input"  name="agrarian_reform_beneficiary">
+                                <label class="form-check-label">Agrarian Reform Beneficiary</label>
+
+                            </div>
+                              </div>
+                        <div class="col-md-3">
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="form-check-input"  name="within_ancestral_domain">
+                                <label class="form-check-label">Within Ancestral Domain </label
+                            </div>
+                              </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <button type="submit" name="save_land" class="btn btn-primary">Save</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script src="js/app.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -214,29 +453,14 @@ $page = "land_info";
 <script src="js/init.js"></script>
 <script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
 <script>
-    var farmersTable = $('#farm_land_info').DataTable(
-    //     {
-    //     'processing': true,
-    //     'serverSide': true,
-    //     'serverMethod': 'post',
-    //     'ajax': {
-    //         'url': 'datatables/farmers_dt.php',
-    //         'data': function(d) {
-    //             d.barangay = $('#sudipen_barangay').val();
-    //         }
-    //     },
-    //     'columns': [
-    //         { data: 'firstname' },
-    //         { data: 'middlename' },
-    //         { data: 'surname' },
-    //         { data: 'birth_date' },
-    //         { data: 'mobile_number', orderable: false },
-    //         { data: 'address' },
-    //         { data: 'actions', orderable: false }
-    //     ],
-    //     'suppressWarnings': true
-    // }
-    );
+    var farmersTable = $('#farm_land_info').DataTable();
+
+    var select_box_element = document.querySelector('#farm_owner');
+
+    dselect(select_box_element, {
+        search: true
+    });
+
 
 </script>
 </body>
